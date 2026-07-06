@@ -23,7 +23,8 @@
     <!-- ===== 项目打包方式：父项目作为聚合器使用 pom 打包 ===== -->
     <packaging>pom</packaging>
 
-    <!-- ===== 子模块声明：控制参与构建与发布的模块列表 ===== -->
+    <!-- ===== 子模块声明：控制参与构建与发布的模块列表 =====
+         core 模块为纯配置，可独立复用；demo 模块演示集成用法 -->
     <modules>
         <module>spring-boot-json</module>
     </modules>
