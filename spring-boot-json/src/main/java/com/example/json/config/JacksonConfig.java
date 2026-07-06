@@ -9,6 +9,7 @@ import tools.jackson.databind.SerializationFeature;
 import tools.jackson.databind.cfg.DateTimeFeature;
 import tools.jackson.databind.cfg.EnumFeature;
 
+import java.time.ZoneOffset;
 import java.util.TimeZone;
 
 /**
@@ -43,7 +44,7 @@ public class JacksonConfig {
             // DTO 字段全为 null 被 NON_NULL 过滤后，序列化空对象不抛异常
             .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
             // 时间戳基准时区，避免因运行环境时区差异导致序列化结果不一致
-            .defaultTimeZone(TimeZone.getTimeZone("UTC"))
+            .defaultTimeZone(TimeZone.getTimeZone(ZoneOffset.UTC))
             // 时间类型序列化为数字时间戳（覆盖默认的 ISO-8601 字符串格式），统一前后端数据交换格式
             .enable(DateTimeFeature.WRITE_DATES_AS_TIMESTAMPS)
             // 时间戳使用毫秒精度（默认纳秒），匹配前端 Number 安全整数范围
