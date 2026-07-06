@@ -137,6 +137,11 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <skipTests>${skipTests}</skipTests>
+                    <!--
+                        启用动态 Agent 加载，消除 Mockito inline-mock-maker 自附加机制
+                        在 JDK 21+ 产生的 WARNING 日志
+                    -->
+                    <argLine>@{argLine} -XX:+EnableDynamicAgentLoading</argLine>
                 </configuration>
             </plugin>
 
