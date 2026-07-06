@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ===== Spring Boot 父项目：继承官方默认配置与依赖版本 ===== -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.1.0</version>
+        <relativePath/>
+    </parent>
+
+    <!-- ===== 项目基本坐标信息：定义聚合父项目的 Maven 唯一标识 ===== -->
+    <groupId>com.example</groupId>
+    <artifactId>spring-boot-best-practice</artifactId>
+    <version>${revision}</version>
+
+    <name>${project.artifactId}</name>
+    <description>Spring Boot 4.x 各模块最佳实践演示</description>
+
+    <!-- ===== 项目打包方式：父项目作为聚合器使用 pom 打包 ===== -->
+    <packaging>pom</packaging>
+
+    <!-- ===== 子模块声明：控制参与构建与发布的模块列表 ===== -->
+    <modules>
+        <module>spring-boot-json</module>
+    </modules>
+
+    <!-- ===== 全局属性：集中管理版本号、编码及编译配置 ===== -->
+    <properties>
+        <!-- 项目版本号，配合 flatten-maven-plugin 实现 CI Friendly Versions -->
+        <revision>1.0.0</revision>
+
+        <!-- Maven 相关配置 -->
+        <java.version>25</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- 第三方依赖版本号 -->
+        <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
+
+        <!-- 构建开关 -->
+        <skipTests>false</skipTests>
+    </properties>
+
+    <!-- ===== 公共依赖：所有演示模块强制继承的最小依赖集合 =====
+         各模块按需在自身 pom 中声明 security、redis、mybatis 等专项依赖 -->
+    <dependencies>
+        <!-- Spring Boot Web：提供 Spring MVC 和嵌入式 Tomcat，构建 RESTful Web 服务 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- Spring Boot 配置注解处理器：生成 @ConfigurationProperties 元数据，支持 IDE 配置自动补全 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- Lombok：通过注解生成 getter、setter、equals、hashCode、toString -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- Spring Boot Test：集成 JUnit、Mockito、AssertJ -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <!-- ===== 构建配置：声明构建周期内使用的插件 ===== -->
+    <build>
+        <plugins>
+            <!-- 统一 revision 版本管理，将 ${revision} 解析为实际版本号写入发布产物 -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>${flatten-maven-plugin.version}</version>
+                <configuration>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                    <updatePomFile>true</updatePomFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- 编译插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+
+            <!-- Surefire 测试插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>${skipTests}</skipTests>
+                </configuration>
+            </plugin>
+
+            <!-- 源码打包插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Spring Boot 打包插件：支持 mvn spring-boot:run 启动，生成可执行 Jar，并排除 Lombok -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

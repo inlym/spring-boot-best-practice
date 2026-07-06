@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ===== 父项目配置：继承统一依赖与插件管理 ===== -->
+    <parent>
+        <groupId>com.example</groupId>
+        <artifactId>spring-boot-best-practice</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <!-- ===== 模块标识信息：定义当前模块的坐标和说明 ===== -->
+    <artifactId>spring-boot-json</artifactId>
+
+    <name>${project.artifactId}</name>
+    <description>JSON 处理模块 - 演示控制器层面的 JSON 序列化与反序列化最佳实践</description>
+
+    <dependencies>
+        <!-- Spring Boot Web MVC 测试切片：提供 @WebMvcTest 和 MockMvc 基础设施（Spring Boot 4 起从 spring-boot-starter-test 中拆出，需单独引入） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>

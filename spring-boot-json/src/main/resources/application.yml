@@ -1,0 +1,23 @@
+# 项目主配置文件
+# JSON 处理演示模块的最小运行配置
+
+# Spring 框架配置
+spring:
+    # 应用名称，用于服务注册和监控标识
+    application:
+        name: "spring-boot-json"
+
+    # 关闭 Spring Boot 启动 banner，减少控制台输出
+    main:
+        banner-mode: off
+
+    # 控制台 ANSI 彩色输出配置
+    output:
+        ansi:
+            # 始终启用彩色输出（可选值：ALWAYS、NEVER、DETECT），便于日志查看和调试
+            enabled: ALWAYS
+
+# 服务器配置
+server:
+    # 启用优雅关闭，接收停止信号后等待正在处理的请求完成
+    shutdown: graceful
