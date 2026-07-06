@@ -17,13 +17,5 @@
     <name>${project.artifactId}</name>
     <description>JSON 处理模块 - 演示控制器层面的 JSON 序列化与反序列化最佳实践</description>
 
-    <dependencies>
-        <!-- Spring Boot Web MVC 测试切片：提供 @WebMvcTest 和 MockMvc 基础设施（Spring Boot 4 起从 spring-boot-starter-test 中拆出，需单独引入） -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webmvc-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 
 </project>

@@ -73,6 +73,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- Spring Boot Web MVC 测试切片：提供 @WebMvcTest 和 MockMvc 基础设施（Spring Boot 4 起从 spring-boot-starter-test 拆出） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <!-- ===== 构建配置：声明构建周期内使用的插件 ===== -->

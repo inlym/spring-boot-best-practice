@@ -3,21 +3,7 @@
 
 # Spring 框架配置
 spring:
-    # 应用名称，用于服务注册和监控标识
+    # 应用名称
     application:
+        # 服务名称，用于服务注册与日志追踪
         name: "spring-boot-json"
-
-    # 关闭 Spring Boot 启动 banner，减少控制台输出
-    main:
-        banner-mode: off
-
-    # 控制台 ANSI 彩色输出配置
-    output:
-        ansi:
-            # 始终启用彩色输出（可选值：ALWAYS、NEVER、DETECT），便于日志查看和调试
-            enabled: ALWAYS
-
-# 服务器配置
-server:
-    # 启用优雅关闭，接收停止信号后等待正在处理的请求完成
-    shutdown: graceful
