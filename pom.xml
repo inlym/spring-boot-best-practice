@@ -29,6 +29,7 @@
         <module>spring-boot-json</module>
         <module>spring-boot-i18n</module>
         <module>spring-boot-websocket</module>
+        <module>spring-boot-redis</module>
     </modules>
 
     <!-- ===== 全局属性：集中管理版本号、编码及编译配置 ===== -->

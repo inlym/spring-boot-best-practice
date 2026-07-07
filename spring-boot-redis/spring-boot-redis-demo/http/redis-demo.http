@@ -1,0 +1,94 @@
+# Redis 演示模块的 HTTP 调试脚本
+#
+# 配合 RedisDemoController 的端点，演示泛化对象、具化对象与二进制三类 RedisTemplate 的存取
+# 前置条件：本地或可访问的 Redis 实例（默认 localhost:6379）
+# 使用方式：在 IntelliJ IDEA 中打开本文件，点击每个请求左侧的绿色箭头执行
+
+@host = http://localhost:8080
+
+### 保存对象（泛化模板，序列化结果含 @class）
+# {{host}}/redis/objects/{key}
+POST {{host}}/redis/objects/user:1001
+Content-Type: application/json
+
+{
+  "username": "alice",
+  "age": 28,
+  "createTime": 1751800000000,
+  "remark": "泛化模板演示"
+}
+
+### 查询对象（泛化模板，@class 还原为原始类型）
+GET {{host}}/redis/objects/user:1001
+
+### 保存用户（具化模板，序列化结果不含 @class）
+POST {{host}}/redis/users/user:2001
+Content-Type: application/json
+
+{
+  "username": "bob",
+  "age": 32,
+  "createTime": 1751800000000,
+  "remark": "具化模板演示"
+}
+
+### 查询用户（具化模板，直接返回 UserInfoDTO 类型）
+GET {{host}}/redis/users/user:2001
+
+### 保存二进制（字节数组原生存储，JSON 中以 Base64 传输）
+# data 为字符串 "hello redis" 的 UTF-8 字节的 Base64 编码
+POST {{host}}/redis/binaries/blob:3001
+Content-Type: application/json
+
+{
+  "data": "aGVsbG8gcmVkaXM="
+}
+
+### 查询二进制（读取原始字节，JSON 中以 Base64 返回）
+GET {{host}}/redis/binaries/blob:3001
+
+### ================================ 常用类型演示 ================================
+
+### 保存列表（泛化模板，List<String> 序列化为 JSON 数组）
+POST {{host}}/redis/lists/tags:4001
+Content-Type: application/json
+
+{
+  "items": ["java", "spring-boot", "redis", "jackson"]
+}
+
+### 查询列表（泛化模板，@class 还原为 List 类型）
+GET {{host}}/redis/lists/tags:4001
+
+### 保存 Long（泛化模板，序列化为 JSON 数字）
+POST {{host}}/redis/longs/counter:5001
+Content-Type: application/json
+
+{
+  "value": 202401010000
+}
+
+### 查询 Long（泛化模板，@class 还原为 Long 类型）
+GET {{host}}/redis/longs/counter:5001
+
+### 保存 Integer（泛化模板，序列化为 JSON 数字）
+POST {{host}}/redis/integers/score:6001
+Content-Type: application/json
+
+{
+  "value": 95
+}
+
+### 查询 Integer（泛化模板，@class 还原为 Integer 类型）
+GET {{host}}/redis/integers/score:6001
+
+### 保存 Boolean（泛化模板，序列化为 JSON 布尔值）
+POST {{host}}/redis/booleans/flag:7001
+Content-Type: application/json
+
+{
+  "value": true
+}
+
+### 查询 Boolean（泛化模板，@class 还原为 Boolean 类型）
+GET {{host}}/redis/booleans/flag:7001
