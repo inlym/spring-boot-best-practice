@@ -10,5 +10,4 @@
 | 类型 | 判断依据 | 适用规范 |
 |---|---|---|
 | 实体类 | 带 `@Table` 注解 | `entity-javadoc.md` |
-| 普通模型类 | 无 `@Table`，类名不以 `DTO`/`VO` 结尾（含 `@ConfigurationProperties` 类） | `model-javadoc.md` |
-| DTO/VO | 类名以 `DTO` 或 `VO` 结尾 | `dto-vo-javadoc.md` |
+| 普通模型类 | 无 `@Table`（含 DTO/VO、`@ConfigurationProperties` 类） | `model-javadoc.md` |

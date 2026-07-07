@@ -23,30 +23,34 @@ import java.time.Instant;
 public class UserInfoDTO {
 
     /**
-     * 用户登录名称，在同一系统内唯一
+     * 用户登录名称
      *
-     * @example alice
+     * <h3>字段说明
+     * <p>在同一系统内唯一。
      */
     private String username;
 
     /**
-     * 用户年龄，单位为岁
+     * 用户年龄
      *
-     * @example 28
+     * <h3>字段说明
+     * <p>单位为岁。
      */
     private Integer age;
 
     /**
-     * 用户创建时间，序列化为毫秒时间戳，反序列化时接受毫秒时间戳
+     * 用户创建时间
      *
-     * @example 1700000000000
+     * <h3>字段说明
+     * <p>序列化为毫秒时间戳，反序列化时接受毫秒时间戳。
      */
     private Instant createTime;
 
     /**
-     * 备注信息，为空时由 NON_NULL 策略从响应体中过滤
+     * 备注信息
      *
-     * @example 管理员用户
+     * <h3>字段说明
+     * <p>为空时由 NON_NULL 策略从响应体中过滤。
      */
     private String remark;
 }

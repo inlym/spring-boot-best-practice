@@ -153,15 +153,13 @@ private final PushBindingMapper pushBindingMapper;
 private final PushApiService pushApiService;
 ```
 
-数据类（实体类、DTO/VO、普通模型类）的字段注释格式以 `naming/javadoc-style.md` 为准。
+数据类（实体类、普通模型类）的字段注释格式以 `naming/javadoc-style.md` 为准。
 
 ## 方法 JavaDoc
 
 所有方法必须有 JavaDoc 注释。方法体仅包含一行委托调用时，可省略方法说明部分（`<h3>` 块），摘要行和 `@param` / `@return` 仍不可省略。
 
 `@Override` 方法若父类/接口已有完整 JavaDoc，子类可省略。
-
-控制器 API 方法的注释格式以 `naming/dto-vo-javadoc.md` 为准，优先级最高，不受本节规范约束。
 
 格式：
 

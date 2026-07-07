@@ -14,9 +14,6 @@ import java.time.Instant;
  * <h2>功能说明
  * <p>提供演示控制器层面 JSON 序列化与反序列化效果的 HTTP 端点，覆盖请求体自动反序列化（@RequestBody）、响应体自动序列化、Instant 毫秒时间戳和 null 字段过滤，不涉及非 HTTP 场景下的手动 JSON 处理。
  *
- * @module JSON 处理
- * @folder JSON 处理
- *
  * @author <a href="https://www.inlym.com">inlym</a>
  * @since 1.0.0
  */
