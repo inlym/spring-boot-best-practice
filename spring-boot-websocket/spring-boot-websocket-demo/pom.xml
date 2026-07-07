@@ -7,22 +7,22 @@
     <!-- ===== 父项目配置：继承统一依赖与插件管理 ===== -->
     <parent>
         <groupId>com.example</groupId>
-        <artifactId>spring-boot-i18n</artifactId>
+        <artifactId>spring-boot-websocket</artifactId>
         <version>${revision}</version>
     </parent>
 
     <!-- ===== 模块标识信息：定义当前模块的坐标和说明 ===== -->
-    <artifactId>spring-boot-i18n-demo</artifactId>
+    <artifactId>spring-boot-websocket-demo</artifactId>
 
     <name>${project.artifactId}</name>
-    <description>国际化演示模块 - 展示 MessageSource 配置与 basename 扩展机制在 HTTP 层的多语言效果</description>
+    <description>WebSocket 演示模块 - 展示会话生命周期管理、入站消息解析与广播/定向路由</description>
 
     <!-- ===== 模块依赖：声明本模块专属的依赖 ===== -->
     <dependencies>
-        <!-- 国际化核心配置模块 -->
+        <!-- WebSocket 核心配置模块 -->
         <dependency>
             <groupId>com.example</groupId>
-            <artifactId>spring-boot-i18n-core</artifactId>
+            <artifactId>spring-boot-websocket-core</artifactId>
             <version>${revision}</version>
         </dependency>
     </dependencies>

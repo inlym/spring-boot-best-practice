@@ -27,4 +27,15 @@
         </dependency>
     </dependencies>
 
+    <!-- ===== 构建配置：本模块为可启动应用，启用 Spring Boot 打包插件 ===== -->
+    <build>
+        <plugins>
+            <!-- Spring Boot 打包插件：继承根 pom pluginManagement 配置，repackage 生成可执行 Jar -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ===== 父项目配置：继承统一依赖与插件管理 ===== -->
+    <parent>
+        <groupId>com.example</groupId>
+        <artifactId>spring-boot-websocket</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <!-- ===== 模块标识信息：定义当前模块的坐标和说明 ===== -->
+    <artifactId>spring-boot-websocket-core</artifactId>
+
+    <name>${project.artifactId}</name>
+    <description>WebSocket 核心模块 - 提供会话管理基类、握手拦截器与定制器扩展机制，可原封不动复制到任意 Spring Boot 项目中使用</description>
+
+    <!-- ===== 模块依赖：声明本模块专属的依赖 ===== -->
+    <dependencies>
+        <!-- Spring Boot WebSocket：提供 WebSocket 配置基础设施与 TextWebSocketHandler 等基础类 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
+        <!-- Spring Boot 校验：为 WebSocketManager 的 @NotBlank、@NotNull 入参约束提供实现 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

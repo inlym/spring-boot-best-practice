@@ -28,6 +28,7 @@
     <modules>
         <module>spring-boot-json</module>
         <module>spring-boot-i18n</module>
+        <module>spring-boot-websocket</module>
     </modules>
 
     <!-- ===== 全局属性：集中管理版本号、编码及编译配置 ===== -->
@@ -86,6 +87,25 @@
 
     <!-- ===== 构建配置：声明构建周期内使用的插件 ===== -->
     <build>
+        <!-- 插件管理：仅声明版本与配置，不自动应用，由需要的子模块在自身 pom 中引用 -->
+        <pluginManagement>
+            <plugins>
+                <!-- Spring Boot 打包插件：仅 demo（应用）模块引用后生效，支持 mvn spring-boot:run 启动、生成可执行 Jar，并排除 Lombok -->
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <configuration>
+                        <excludes>
+                            <exclude>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                            </exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
             <!-- 统一 revision 版本管理，将 ${revision} 解析为实际版本号写入发布产物 -->
             <plugin>
@@ -158,20 +178,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-
-            <!-- Spring Boot 打包插件：支持 mvn spring-boot:run 启动，生成可执行 Jar，并排除 Lombok -->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
             </plugin>
         </plugins>
     </build>
