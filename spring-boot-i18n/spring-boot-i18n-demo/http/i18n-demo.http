@@ -1,0 +1,20 @@
+# 国际化演示模块的 HTTP 调试脚本
+#
+# 配合 I18nDemoController 的两个端点，演示根据 Accept-Language 切换语言、占位符参数替换效果
+# 使用方式：在 IntelliJ IDEA 中打开本文件，点击每个请求左侧的绿色箭头执行
+
+@host = http://localhost:8080
+
+### 获取当前语言（默认中文，不发送 Accept-Language 命中回退语言 zh-CN）
+GET {{host}}/messages/language
+
+### 获取当前语言（英文，发送裸标签 en，经语言级回退命中）
+GET {{host}}/messages/language
+Accept-Language: en
+
+### 获取欢迎消息（默认中文，演示 {0} 占位符替换为 name）
+GET {{host}}/messages/welcome?name=Alice
+
+### 获取欢迎消息（英文，演示 {0} 占位符替换为 name）
+GET {{host}}/messages/welcome?name=Alice
+Accept-Language: en

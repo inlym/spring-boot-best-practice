@@ -24,9 +24,10 @@
     <packaging>pom</packaging>
 
     <!-- ===== 子模块声明：控制参与构建与发布的模块列表 =====
-         core 模块为纯配置，可独立复用；demo 模块演示集成用法 -->
+         各模块均含可独立复用的 core 配置与演示集成用法的 demo -->
     <modules>
         <module>spring-boot-json</module>
+        <module>spring-boot-i18n</module>
     </modules>
 
     <!-- ===== 全局属性：集中管理版本号、编码及编译配置 ===== -->
@@ -141,7 +142,7 @@
                         启用动态 Agent 加载，消除 Mockito inline-mock-maker 自附加机制
                         在 JDK 21+ 产生的 WARNING 日志
                     -->
-                    <argLine>@{argLine} -XX:+EnableDynamicAgentLoading</argLine>
+                    <argLine>-XX:+EnableDynamicAgentLoading</argLine>
                 </configuration>
             </plugin>
 
