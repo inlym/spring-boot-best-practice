@@ -12,10 +12,10 @@ spring-boot-i18n/
 └── spring-boot-i18n-demo/        # 演示模块（HTTP 层多语言效果展示）
 ```
 
-| 子模块                                               | 定位   | 说明                                                                                                    |
-|---------------------------------------------------|------|-------------------------------------------------------------------------------------------------------|
-| [`spring-boot-i18n-core`](spring-boot-i18n-core/) | 核心配置 | 含 `I18nConfig`、`I18nService` 与 `MessageSourceBasenameCustomizer` 扩展接口，可原封不动（仅改包名）复制到任意 Spring Boot 项目 |
-| [`spring-boot-i18n-demo`](spring-boot-i18n-demo/) | 演示模块 | 完整 Spring Boot 应用，展示 core 配置 + 业务模块注册 basename 后的 HTTP 多语言效果                                          |
+| 子模块                                              | 定位   | 说明                                                                                                    |
+|--------------------------------------------------|------|-------------------------------------------------------------------------------------------------------|
+| [`spring-boot-i18n-core`](spring-boot-i18n-core) | 核心配置 | 含 `I18nConfig`、`I18nService` 与 `MessageSourceBasenameCustomizer` 扩展接口，可原封不动（仅改包名）复制到任意 Spring Boot 项目 |
+| [`spring-boot-i18n-demo`](spring-boot-i18n-demo) | 演示模块 | 完整 Spring Boot 应用，展示 core 配置 + 业务模块注册 basename 后的 HTTP 多语言效果                                          |
 
 ## 国际化配置
 
