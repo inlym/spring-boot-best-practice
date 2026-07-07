@@ -31,11 +31,11 @@ spring-boot-best-practice/
 
 ## 模块清单
 
-| 模块 | 说明 |
-|------|------|
-| `spring-boot-json` | JSON 处理父模块，聚合 core 与 demo |
+| 模块                      | 说明                                               |
+|-------------------------|--------------------------------------------------|
+| `spring-boot-json`      | JSON 处理父模块，聚合 core 与 demo                        |
 | `spring-boot-json-core` | Jackson 全局配置，可原封不动（仅修改包名）复制到任意 Spring Boot 项目中使用 |
-| `spring-boot-json-demo` | JSON 处理演示，展示 core 配置在 HTTP 层的序列化与反序列化效果 |
+| `spring-boot-json-demo` | JSON 处理演示，展示 core 配置在 HTTP 层的序列化与反序列化效果          |
 
 ## 模块复用指南
 
@@ -70,10 +70,10 @@ spring-boot-best-practice/
 
 演示端点：
 
-| 方法 | 路径 | 演示要点 |
-|------|------|----------|
-| `POST` | `/users` | 回显请求体：未知字段忽略、Instant 毫秒时间戳双向转换、null 字段过滤 |
-| `GET` | `/users/sample` | 返回构造的示例对象：Instant 毫秒时间戳、空字段 `NON_NULL` 过滤 |
+| 方法     | 路径              | 演示要点                                      |
+|--------|-----------------|-------------------------------------------|
+| `POST` | `/users`        | 回显请求体：未知字段忽略、Instant 毫秒时间戳双向转换、null 字段过滤  |
+| `GET`  | `/users/sample` | 返回构造的示例对象：Instant 毫秒时间戳、空字段 `NON_NULL` 过滤 |
 
 ## 快速开始
 
