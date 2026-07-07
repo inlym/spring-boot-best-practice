@@ -1,0 +1,25 @@
+# JSON 处理演示模块的 HTTP 调试脚本
+#
+# 配合 JsonDemoController 的两个端点，演示 Jackson 在 HTTP 层的序列化与反序列化效果
+# 使用方式：在 IntelliJ IDEA 中打开本文件，点击每个请求左侧的绿色箭头执行
+
+@host = http://localhost:8080
+
+### 回显用户信息
+# 请求体含未知字段 extra（预期被 FAIL_ON_UNKNOWN_PROPERTIES 忽略）
+# createTime 传毫秒时间戳，演示请求方向的 Instant 反序列化
+# remark 未传，响应中由 NON_NULL 过滤
+POST {{host}}/users
+Content-Type: application/json
+
+{
+  "username": "alice",
+  "age": 28,
+  "createTime": 1700000000000,
+  "extra": "ignored"
+}
+
+### 获取示例用户
+# createTime 序列化为毫秒时间戳
+# remark 留空被 NON_NULL 过滤
+GET {{host}}/users/sample

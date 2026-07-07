@@ -64,6 +64,8 @@ spring-boot-json/
 | `POST` | `/users`        | 回显请求体：未知字段忽略、Instant 毫秒时间戳双向转换、`null` 字段过滤 |
 | `GET`  | `/users/sample` | 返回构造的示例对象：Instant 毫秒时间戳、空字段 `NON_NULL` 过滤  |
 
+> 调试以上端点可在 IntelliJ IDEA 中直接运行 [`json-demo.http`](spring-boot-json-demo/http/json-demo.http)，或使用下方 curl 命令。
+
 ## 快速开始
 
 从项目根目录执行：
