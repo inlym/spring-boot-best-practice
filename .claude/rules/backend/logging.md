@@ -41,18 +41,3 @@ if (user == null) {
     return;
 }
 ```
-
-## @LogExecution 注解
-
-主要的 public 方法必须添加 `@LogExecution` 注解（位于 `com.example.core.annotation`），其 AOP 切面会自动记录入参、返回值和执行时长，默认日志级别为 `TRACE`。
-
-- 已添加 `@LogExecution` 的方法，内部严禁重复打印入参、返回值日志
-- 仅对主要的 public 方法添加，private 方法或仅做一行委托的 public 方法无需添加
-- 注解无法拦截同类内部方法调用，被同类其他方法调用的方法添加注解不会生效
-
-```java
-@LogExecution
-public User getByUserId(long userId) {
-    return userMapper.selectOneByCondition(USER_INFO.ID.eq(userId));
-}
-```

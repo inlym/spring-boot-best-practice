@@ -89,7 +89,7 @@ All coding conventions live in `.claude/rules/`. Key structural norms:
 | `backend/spring-layering.md`    | Controller/Service/Config layering, DI, query method naming (`getBy*` vs `findBy*`) |
 | `backend/validation.md`         | `@Validated` + annotation-based validation, no manual null checks                   |
 | `backend/exception-handling.md` | No try-catch in controllers/services; global exception handler                      |
-| `backend/logging.md`            | Slf4j, `@LogExecution`, level guidelines                                            |
+| `backend/logging.md`            | Slf4j, level guidelines                                                             |
 | `backend/config-format.md`      | YAML grouping, comments, spacing                                                    |
 | `api/response.md`               | Error codes independent of HTTP status codes                                        |
 | `database/mysql.md`             | Table schema conventions, MyBatis-Flex usage                                        |
