@@ -1,0 +1,23 @@
+### 异步 void 任务（发射即忘模式）
+POST http://localhost:8080/async/tasks
+
+### 异步任务并等待结果（CompletableFuture）
+POST http://localhost:8080/async/tasks/with-result
+
+### 使用自定义执行器的异步任务（平台线程池）
+POST http://localhost:8080/async/tasks/with-custom-executor
+
+### 产生异常的异步任务（演示 AsyncUncaughtExceptionHandler）
+POST http://localhost:8080/async/tasks/with-error
+
+### 自调用陷阱演示（@Async 不生效，同步阻塞）
+POST http://localhost:8080/async/tasks/self-invocation
+
+### 代理调用演示（正确方式，@Async 正常生效，异步执行）
+POST http://localhost:8080/async/tasks/proxy-invocation
+
+### 查询全部任务执行记录
+GET http://localhost:8080/async/tasks
+
+### 按 ID 查询任务执行记录
+GET http://localhost:8080/async/tasks/{{taskId}}
