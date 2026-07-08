@@ -71,7 +71,8 @@ public class CacheConfig {
      */
     @Bean
     public CacheManager cacheManager() {
-        // 复用项目统一的 JsonMapper，保证 Spring Cache 与 RedisTemplate 对 Instant 字段的序列化方式一致（毫秒时间戳）
+        // Spring Cache 与 RedisTemplate 需对 Instant 字段使用相同的序列化策略（毫秒时间戳），
+        // 避免同一对象在缓存和直接 Redis 操作中序列化结果不一致
         // 配置默认缓存：字符串键序列化 + JSON 值序列化（含类型信息）
         RedisCacheConfiguration defaultConfig = RedisCacheConfiguration
             .defaultCacheConfig()
@@ -84,12 +85,19 @@ public class CacheConfig {
                 )
             )
             .entryTtl(Duration.ofMinutes(10))
+            // 使用 ":" 作为缓存名前缀分隔符，与 Spring Cache 默认命名约定保持一致
             .computePrefixWith(cacheName -> cacheName + ":");
 
         // 收集所有业务模块的缓存配置
         Map<String, RedisCacheConfiguration> cacheConfigurations = new HashMap<>();
         for (CacheTtlCustomizer customizer : customizers) {
-            customizer.declareCacheTtl().forEach((cacheName, ttl) -> {
+            Map<String, Duration> ttlMap = customizer.declareCacheTtl();
+            // 实现类未声明任何缓存配置时跳过
+            if (ttlMap == null || ttlMap.isEmpty()) {
+                log.trace("{} 未声明任何缓存 TTL 配置，跳过", customizer.getClass().getSimpleName());
+                continue;
+            }
+            ttlMap.forEach((cacheName, ttl) -> {
                 // 检测重复配置并打印警告日志
                 if (cacheConfigurations.containsKey(cacheName)) {
                     log.warn(

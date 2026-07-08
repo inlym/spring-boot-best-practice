@@ -1,5 +1,7 @@
 package com.example.cache.demo.model;
 
+import java.time.Instant;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,14 +20,20 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
+public class User {
 
-    /** 用户 ID */
-    private Long userId;
+    /** 主键 ID */
+    private Long id;
 
     /** 用户名 */
     private String username;
 
     /** 邮箱 */
     private String email;
+
+    /** 创建时间 */
+    private Instant createTime;
+
+    /** 年龄 */
+    private Integer age;
 }

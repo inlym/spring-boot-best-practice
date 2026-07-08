@@ -2,7 +2,7 @@ package com.example.cache.demo.service;
 
 import static com.example.cache.demo.config.CacheDemoTtlCustomizer.CACHE_NAME_USERS;
 
-import com.example.cache.demo.model.UserDTO;
+import com.example.cache.demo.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -10,17 +10,17 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Spring Cache 注解演示服务
  *
  * <h2>说明
- * <p>使用 ConcurrentHashMap 模拟数据库存储，演示 Spring Cache 全部缓存注解的典型用法。
+ * <p>使用线程安全的 List 模拟数据库存储，演示 Spring Cache 全部缓存注解的典型用法。
  * <p>所有缓存操作以 Redis 为后端存储，由 CacheConfig 统一配置。
  *
  * @author <a href="https://www.inlym.com">inlym</a>
@@ -34,7 +34,7 @@ public class CacheDemoService {
     private static final String ALL_USERS_KEY = "'all'";
 
     /** 模拟数据库存储 */
-    private final Map<Long, UserDTO> database = new ConcurrentHashMap<>();
+    private final List<User> database = new CopyOnWriteArrayList<>();
 
     /** 自增 ID 生成器 */
     private final AtomicLong idGenerator = new AtomicLong(0);
@@ -52,12 +52,12 @@ public class CacheDemoService {
      * @return 用户信息，不存在时为 null
      */
     @Cacheable(cacheNames = CACHE_NAME_USERS, key = "#userId", unless = "#result == null")
-    public UserDTO getByUserId(Long userId) {
+    public User getByUserId(Long userId) {
         // 模拟数据库查询，延时 100ms
         simulateDatabaseLatency();
 
-        // 从模拟数据库读取
-        UserDTO user = database.get(userId);
+        // 从模拟数据库按 ID 查找
+        User user = findById(userId);
 
         // 未命中时打印日志，演示缓存生效前后的差异
         log.info("数据库查询：userId={}, 命中={}", userId, user != null);
@@ -74,12 +74,12 @@ public class CacheDemoService {
      * @return 用户列表，无数据时返回空列表
      */
     @Cacheable(cacheNames = CACHE_NAME_USERS, key = ALL_USERS_KEY)
-    public List<UserDTO> listAllUsers() {
+    public List<User> listAllUsers() {
         // 模拟数据库查询，延时 100ms
         simulateDatabaseLatency();
 
         // 从模拟数据库读取全量数据
-        List<UserDTO> users = new ArrayList<>(database.values());
+        List<User> users = new ArrayList<>(database);
 
         log.info("数据库全量查询：共 {} 条", users.size());
 
@@ -97,23 +97,25 @@ public class CacheDemoService {
      * @return 创建后的用户信息（含自动生成的 ID）
      */
     @Caching(
-        put = {@CachePut(cacheNames = CACHE_NAME_USERS, key = "#result.userId")},
+        put = {@CachePut(cacheNames = CACHE_NAME_USERS, key = "#result.id")},
         evict = {@CacheEvict(cacheNames = CACHE_NAME_USERS, key = ALL_USERS_KEY)}
     )
-    public UserDTO createUser(UserDTO dto) {
+    public User createUser(User dto) {
         // 生成自增 ID
-        Long userId = idGenerator.incrementAndGet();
+        Long id = idGenerator.incrementAndGet();
 
         // 构建完整用户对象并写入模拟数据库
-        UserDTO user = UserDTO
+        User user = User
             .builder()
-            .userId(userId)
+            .id(id)
             .username(dto.getUsername())
             .email(dto.getEmail())
+            .age(dto.getAge())
+            .createTime(Instant.now())
             .build();
-        database.put(userId, user);
+        database.add(user);
 
-        log.info("创建用户：userId={}, username={}", userId, user.getUsername());
+        log.info("创建用户：id={}, username={}", id, user.getUsername());
 
         return user;
     }
@@ -133,22 +135,24 @@ public class CacheDemoService {
         put = {@CachePut(cacheNames = CACHE_NAME_USERS, key = "#userId", unless = "#result == null")},
         evict = {@CacheEvict(cacheNames = CACHE_NAME_USERS, key = ALL_USERS_KEY)}
     )
-    public UserDTO updateUser(Long userId, UserDTO dto) {
+    public User updateUser(Long userId, User dto) {
         // 检查用户是否存在
-        UserDTO existing = database.get(userId);
+        User existing = findById(userId);
         if (existing == null) {
             log.trace("用户不存在，跳过更新，userId={}", userId);
             return null;
         }
 
-        // 构建更新后的用户对象并写回模拟数据库
-        UserDTO updated = UserDTO
+        // 构建更新后的用户对象并替换模拟数据库中的旧记录
+        User updated = User
             .builder()
-            .userId(userId)
+            .id(userId)
             .username(dto.getUsername())
             .email(dto.getEmail())
+            .age(dto.getAge())
+            .createTime(existing.getCreateTime())
             .build();
-        database.put(userId, updated);
+        database.replaceAll(u -> userId.equals(u.getId()) ? updated : u);
 
         log.info("更新用户：userId={}, username={}", userId, updated.getUsername());
 
@@ -169,8 +173,8 @@ public class CacheDemoService {
         @CacheEvict(cacheNames = CACHE_NAME_USERS, key = ALL_USERS_KEY, beforeInvocation = true)
     })
     public void deleteUser(Long userId) {
-        // 从模拟数据库移除
-        database.remove(userId);
+        // 从模拟数据库按 ID 移除
+        database.removeIf(u -> userId.equals(u.getId()));
 
         log.info("删除用户：userId={}", userId);
     }
@@ -199,12 +203,12 @@ public class CacheDemoService {
      * @return 用户信息，不存在时为 null
      */
     @Cacheable(cacheNames = CACHE_NAME_USERS, key = "#userId", condition = "#userId > 0", unless = "#result == null")
-    public UserDTO getByUserIdWithCondition(Long userId) {
+    public User getByUserIdWithCondition(Long userId) {
         // 模拟数据库查询，延时 100ms
         simulateDatabaseLatency();
 
-        // 从模拟数据库读取
-        UserDTO user = database.get(userId);
+        // 从模拟数据库按 ID 查找
+        User user = findById(userId);
 
         log.info("条件缓存-数据库查询：userId={}, 命中={}", userId, user != null);
 
@@ -212,6 +216,20 @@ public class CacheDemoService {
     }
 
     // ================================ private 方法 ================================
+
+    /**
+     * 按 ID 查找用户
+     *
+     * @param userId 用户 ID
+     * @return 用户信息，不存在时为 null
+     */
+    private User findById(Long userId) {
+        return database
+            .stream()
+            .filter(u -> userId.equals(u.getId()))
+            .findFirst()
+            .orElse(null);
+    }
 
     /**
      * 模拟数据库查询延时

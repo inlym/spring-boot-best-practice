@@ -1,7 +1,7 @@
 package com.example.cache.demo.controller;
 
 import com.example.cache.demo.model.EmptyResponse;
-import com.example.cache.demo.model.UserDTO;
+import com.example.cache.demo.model.User;
 import com.example.cache.demo.service.CacheDemoService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -51,7 +51,7 @@ public class CacheDemoController {
      * @return 用户信息
      */
     @GetMapping("/cache/users/{userId}")
-    public UserDTO getByUserId(@PathVariable Long userId) {
+    public User getByUserId(@PathVariable Long userId) {
         // 调用服务查询用户，缓存自动生效
         return cacheDemoService.getByUserId(userId);
     }
@@ -66,7 +66,7 @@ public class CacheDemoController {
      * @return 用户列表
      */
     @GetMapping("/cache/users")
-    public List<UserDTO> listAllUsers() {
+    public List<User> listAllUsers() {
         // 调用服务查询全量用户，缓存自动生效
         return cacheDemoService.listAllUsers();
     }
@@ -81,9 +81,14 @@ public class CacheDemoController {
      * @return 创建后的用户信息（含自动生成的 ID）
      */
     @PostMapping("/cache/users")
-    public UserDTO createUser(@RequestBody @Valid UserSaveDTO dto) {
+    public User createUser(@RequestBody @Valid UserSaveDTO dto) {
         // 构建用户信息并调用服务创建
-        UserDTO user = UserDTO.builder().username(dto.getUsername()).email(dto.getEmail()).build();
+        User user = User
+            .builder()
+            .username(dto.getUsername())
+            .email(dto.getEmail())
+            .age(dto.getAge())
+            .build();
 
         return cacheDemoService.createUser(user);
     }
@@ -99,9 +104,14 @@ public class CacheDemoController {
      * @return 更新后的用户信息
      */
     @PutMapping("/cache/users/{userId}")
-    public UserDTO updateUser(@PathVariable Long userId, @RequestBody @Valid UserSaveDTO dto) {
+    public User updateUser(@PathVariable Long userId, @RequestBody @Valid UserSaveDTO dto) {
         // 构建用户信息并调用服务更新
-        UserDTO user = UserDTO.builder().username(dto.getUsername()).email(dto.getEmail()).build();
+        User user = User
+            .builder()
+            .username(dto.getUsername())
+            .email(dto.getEmail())
+            .age(dto.getAge())
+            .build();
 
         return cacheDemoService.updateUser(userId, user);
     }
@@ -149,7 +159,7 @@ public class CacheDemoController {
      * @return 用户信息
      */
     @GetMapping("/cache/users/{userId}/conditional")
-    public UserDTO getByUserIdWithCondition(@PathVariable Long userId) {
+    public User getByUserIdWithCondition(@PathVariable Long userId) {
         // 调用服务查询用户，条件缓存自动生效
         return cacheDemoService.getByUserIdWithCondition(userId);
     }
@@ -175,5 +185,8 @@ public class CacheDemoController {
         /** 邮箱 */
         @NotBlank
         private String email;
+
+        /** 年龄 */
+        private Integer age;
     }
 }
