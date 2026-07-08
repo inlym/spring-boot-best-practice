@@ -32,6 +32,7 @@
         <module>spring-boot-redis</module>
         <module>spring-boot-cache</module>
         <module>spring-boot-async</module>
+        <module>spring-boot-scheduling</module>
     </modules>
 
     <!-- ===== 全局属性：集中管理版本号、编码及编译配置 ===== -->

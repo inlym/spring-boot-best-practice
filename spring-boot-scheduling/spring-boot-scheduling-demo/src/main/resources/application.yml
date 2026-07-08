@@ -1,0 +1,14 @@
+# spring-boot-scheduling-demo 演示模块最小运行配置
+
+# Spring 框架配置
+spring:
+    # 应用名称
+    application:
+        # 服务名称，用于服务注册与日志追踪
+        name: "spring-boot-scheduling-demo"
+
+    # 虚拟线程配置（Spring Boot 4.x 默认启用，此处显式声明以增强可读性）
+    threads:
+        # 启用虚拟线程，使 Tomcat 和 @Async 等基础设施默认使用虚拟线程
+        virtual:
+            enabled: true

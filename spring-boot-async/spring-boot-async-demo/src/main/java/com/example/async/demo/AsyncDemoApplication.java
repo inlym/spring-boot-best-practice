@@ -26,7 +26,7 @@ public class AsyncDemoApplication {
      *
      * @param args 命令行参数
      */
-    public static void main(String[] args) {
+    static void main(String[] args) {
         SpringApplication.run(AsyncDemoApplication.class, args);
     }
 }
