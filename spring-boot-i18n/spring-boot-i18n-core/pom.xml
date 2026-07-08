@@ -19,11 +19,6 @@
 
     <!-- ===== 模块依赖：声明本模块专属的依赖 ===== -->
     <dependencies>
-        <!-- Spring Boot 校验：为 I18nService 的 @NotBlank 入参约束提供实现 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
     </dependencies>
 
 </project>

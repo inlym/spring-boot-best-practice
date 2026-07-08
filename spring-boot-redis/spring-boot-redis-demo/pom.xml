@@ -33,11 +33,6 @@
             <version>${revision}</version>
         </dependency>
 
-        <!-- Spring Boot Validation：提供 @Valid、@NotNull 等校验注解与 Hibernate Validator 实现 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
     </dependencies>
 
     <!-- ===== 构建配置：本模块为可启动应用，启用 Spring Boot 打包插件 ===== -->
