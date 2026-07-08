@@ -25,6 +25,12 @@
             <artifactId>mybatis-flex-spring-boot4-starter</artifactId>
             <version>1.11.7</version>
         </dependency>
+
+        <!-- Spring Boot JDBC 启动器，提供 DataSource 连接池与 JdbcTemplate 支持 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

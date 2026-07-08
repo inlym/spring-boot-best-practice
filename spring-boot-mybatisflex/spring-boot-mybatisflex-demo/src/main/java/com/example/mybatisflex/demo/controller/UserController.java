@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * <h2>功能说明
  * <p>提供用户增删改查的 REST 端点，演示 MyBatis-Flex ORM 框架在 HTTP 层的完整集成用法。
- * <p>覆盖 save 新增、主键查询、用户名查询、Builder 方式更新和逻辑删除五种典型操作。
+ * <p>覆盖 insertSelective 新增、主键查询、用户名查询、Builder 方式更新和逻辑删除五种典型操作。
  *
  * @author <a href="https://www.inlym.com">inlym</a>
  * @since 1.0.0
@@ -44,7 +44,6 @@ public class UserController {
      */
     @PostMapping("/users")
     public User create(@RequestBody @Valid User dto) {
-        // save 方法内部调用 insertSelective，仅插入非 null 字段，数据库默认值生效
         userService.save(dto);
         return dto;
     }
@@ -57,13 +56,7 @@ public class UserController {
      */
     @GetMapping("/users/{userId}")
     public User getById(@PathVariable Long userId) {
-        User user = userService.getById(userId);
-
-        // IService.getById 未找到时返回 null，控制器层转为异常以符合 getBy* 命名契约
-        if (user == null) {
-            throw new IllegalArgumentException(String.format("用户不存在，userId=%d", userId));
-        }
-        return user;
+        return userService.getById(userId);
     }
 
     /**
@@ -74,7 +67,6 @@ public class UserController {
      */
     @GetMapping("/users/by-username")
     public User getByUsername(@RequestParam @NotBlank String username) {
-        // findByUsername 未找到时返回 null，符合 findBy* 命名契约
         return userService.findByUsername(username);
     }
 
@@ -97,15 +89,10 @@ public class UserController {
             .age(dto.getAge())
             .build();
 
-        // updateById 按主键更新，忽略 null 字段
-        userService.updateById(updateUser);
+        userService.update(updateUser);
 
         // 更新后重新查询以获取最新数据
-        User updated = userService.getById(userId);
-        if (updated == null) {
-            throw new IllegalArgumentException(String.format("用户不存在，userId=%d", userId));
-        }
-        return updated;
+        return userService.getById(userId);
     }
 
     /**
@@ -119,8 +106,7 @@ public class UserController {
      */
     @DeleteMapping("/users/{userId}")
     public EmptyResponse delete(@PathVariable Long userId) {
-        // removeById 触发逻辑删除，delete_time 字段自动填充当前时间戳
-        userService.removeById(userId);
+        userService.deleteById(userId);
         return EmptyResponse.success();
     }
 }

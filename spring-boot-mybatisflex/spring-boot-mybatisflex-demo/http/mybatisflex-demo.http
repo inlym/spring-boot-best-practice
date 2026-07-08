@@ -1,0 +1,41 @@
+# MyBatis-Flex 演示模块 HTTP 调试脚本
+#
+# 配合 UserController 的端点，演示 MyBatis-Flex ORM 框架增删改查全流程
+# 使用方式：在 IntelliJ IDEA 中打开本文件，点击每个请求左侧的绿色箭头执行
+#
+# 演示流程建议：
+#   1. 先执行 POST 创建用户（获取自增 ID）
+#   2. 执行 GET 按 ID 查询（验证创建成功）
+#   3. 执行 GET 按用户名查询（演示条件查询）
+#   4. 执行 PUT 更新用户（仅更新邮箱和年龄）
+#   5. 执行 DELETE 逻辑删除（delete_time 自动填充）
+
+@host = http://localhost:8080
+
+### 创建用户（insertSelective，仅插入非 null 字段，回显自增 ID）
+POST {{host}}/users
+Content-Type: application/json
+
+{
+    "username": "alice",
+    "email": "alice@example.com",
+    "age": 25
+}
+
+### 按主键查询用户（IService.getById）
+GET {{host}}/users/1
+
+### 按用户名查找用户（QueryWrapper 条件查询，未找到返回 null）
+GET {{host}}/users/by-username?username=alice
+
+### 更新用户邮箱和年龄（Builder 方式构建更新实例，仅更新指定字段）
+PUT {{host}}/users/1
+Content-Type: application/json
+
+{
+    "email": "alice.new@example.com",
+    "age": 26
+}
+
+### 逻辑删除用户（delete_time 自动填充为当前时间戳，数据不物理删除）
+DELETE {{host}}/users/1

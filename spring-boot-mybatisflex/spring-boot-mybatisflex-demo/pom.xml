@@ -33,16 +33,32 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Spring Boot JDBC 启动器，提供 DataSource 和 JdbcTemplate 支持 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>
     </dependencies>
 
     <!-- ===== 构建配置：本模块为可启动应用，启用 Spring Boot 打包插件 ===== -->
     <build>
         <plugins>
+            <!-- Maven 编译插件：通过 annotationProcessorPaths 显式注册 MyBatis-Flex APT 处理器，
+                 确保与 Lombok 等处理器共存时正确执行代码生成 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>com.mybatis-flex</groupId>
+                            <artifactId>mybatis-flex-processor</artifactId>
+                            <version>1.11.7</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
             <!-- Spring Boot 打包插件：继承根 pom pluginManagement 配置，repackage 生成可执行 Jar -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
