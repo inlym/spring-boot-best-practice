@@ -33,6 +33,13 @@
             <version>${revision}</version>
         </dependency>
 
+        <!-- 内嵌 Redis：免安装运行 Redis 服务，激活 embedded profile 时生效 -->
+        <dependency>
+            <groupId>com.github.codemonstur</groupId>
+            <artifactId>embedded-redis</artifactId>
+            <version>1.4.3</version>
+        </dependency>
+
     </dependencies>
 
     <!-- ===== 构建配置：本模块为可启动应用，启用 Spring Boot 打包插件 ===== -->

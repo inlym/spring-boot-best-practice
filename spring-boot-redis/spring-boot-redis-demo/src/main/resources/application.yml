@@ -1,15 +1,15 @@
-# spring-boot-redis-demo 演示模块配置，需本机或可访问的 Redis 实例
+# spring-boot-redis-demo 演示模块配置
+# 应用启动时自动拉起内嵌 Redis，无需手动安装 Redis 服务
 
 # Spring 框架配置
 spring:
-    # 应用名称
+    # 应用名称，用于服务注册与日志追踪
     application:
-        # 服务名称，用于服务注册与日志追踪
         name: "spring-boot-redis-demo"
 
     # Redis 配置
     data:
-        # Redis 连接配置
+        # Redis 连接配置（内嵌 Redis 监听同一地址和端口）
         redis:
             # Redis 服务器地址
             host: "localhost"
