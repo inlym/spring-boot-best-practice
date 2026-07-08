@@ -1,0 +1,17 @@
+# spring-boot-cache-demo 演示模块配置，需本机或可访问的 Redis 实例
+
+# Spring 框架配置
+spring:
+    # 应用名称
+    application:
+        # 服务名称，用于服务注册与日志追踪
+        name: "spring-boot-cache-demo"
+
+    # Redis 配置
+    data:
+        # Redis 连接配置
+        redis:
+            # Redis 服务器地址
+            host: "localhost"
+            # Redis 服务器端口
+            port: 6379

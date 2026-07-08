@@ -1,0 +1,45 @@
+# 缓存演示模块 HTTP 调试脚本
+#
+# 配合 CacheDemoController 的端点，演示 Spring Cache 全部缓存注解的典型用法
+# 使用方式：在 IntelliJ IDEA 中打开本文件，点击每个请求左侧的绿色箭头执行
+#
+# 演示流程建议：
+#   1. 先执行 GET 查询（首次命中数据库，100ms 延时）
+#   2. 再次执行同 ID 查询（命中缓存，几乎即时响应）
+#   3. 执行 PUT 更新（观察缓存刷新）
+#   4. 执行 DELETE 删除（观察缓存驱逐）
+
+@host = http://localhost:8080
+
+### 按 ID 查询用户（首次查询数据库，后续命中缓存）
+GET {{host}}/cache/users/1
+
+### 按 ID 查询用户（条件缓存演示，userId > 0 才使用缓存）
+GET {{host}}/cache/users/1/conditional
+
+### 查询全量用户列表
+GET {{host}}/cache/users
+
+### 创建用户（@CachePut 写入单条缓存 + @CacheEvict 驱逐列表缓存）
+POST {{host}}/cache/users
+Content-Type: application/json
+
+{
+    "username": "Alice",
+    "email": "alice@example.com"
+}
+
+### 更新用户（@CachePut 刷新单条缓存 + @CacheEvict 驱逐列表缓存）
+PUT {{host}}/cache/users/1
+Content-Type: application/json
+
+{
+    "username": "Alice Updated",
+    "email": "alice.updated@example.com"
+}
+
+### 删除用户（@CacheEvict 驱逐单条缓存 + 全量列表缓存）
+DELETE {{host}}/cache/users/1
+
+### 清空所有缓存（@CacheEvict allEntries = true）
+DELETE {{host}}/cache
