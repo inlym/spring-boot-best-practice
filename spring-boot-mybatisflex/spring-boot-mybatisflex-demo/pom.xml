@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ===== 父项目配置：继承统一依赖与插件管理 ===== -->
+    <parent>
+        <groupId>com.example</groupId>
+        <artifactId>spring-boot-mybatisflex</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <!-- ===== 模块标识信息：定义当前模块的坐标和说明 ===== -->
+    <artifactId>spring-boot-mybatisflex-demo</artifactId>
+
+    <name>${project.artifactId}</name>
+    <description>MyBatis-Flex 演示模块 - 使用 H2 内存数据库展示 ORM 框架增删改查等基础操作的最佳实践</description>
+
+    <!-- ===== 模块依赖：声明本模块专属的依赖 ===== -->
+    <dependencies>
+        <!-- MyBatis-Flex 核心配置模块 -->
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>spring-boot-mybatisflex-core</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <!-- H2 内存数据库，演示用，运行时依赖 -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Spring Boot JDBC 启动器，提供 DataSource 和 JdbcTemplate 支持 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+    </dependencies>
+
+    <!-- ===== 构建配置：本模块为可启动应用，启用 Spring Boot 打包插件 ===== -->
+    <build>
+        <plugins>
+            <!-- Spring Boot 打包插件：继承根 pom pluginManagement 配置，repackage 生成可执行 Jar -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

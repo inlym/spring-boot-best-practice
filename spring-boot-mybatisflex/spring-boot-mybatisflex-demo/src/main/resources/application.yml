@@ -1,0 +1,32 @@
+# MyBatis-Flex 演示模块配置
+# 使用 H2 内存数据库，零环境依赖，启动即用
+
+# Spring 框架配置
+spring:
+    # 应用名称
+    application:
+        # 服务名称，用于服务注册与日志追踪
+        name: "spring-boot-mybatisflex-demo"
+
+    # 数据源配置
+    datasource:
+        # H2 内存数据库连接地址，testdb 为数据库名，MODE=MySQL 兼容 MySQL 语法
+        url: jdbc:h2:mem:testdb;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+        # H2 数据库驱动类
+        driver-class-name: org.h2.Driver
+        # 数据库用户名
+        username: sa
+        # 数据库密码（H2 默认无密码）
+        password:
+
+    # SQL 初始化配置
+    sql:
+        init:
+            # 启用 schema.sql 自动执行，每次启动时重建表结构
+            mode: always
+
+# MyBatis-Flex 框架配置
+mybatis-flex:
+    configuration:
+        # 日志实现类，使用 Slf4j 输出 SQL 日志
+        log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
