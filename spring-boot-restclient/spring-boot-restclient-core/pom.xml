@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ===== 父项目配置：继承统一依赖与插件管理 ===== -->
+    <parent>
+        <groupId>com.example</groupId>
+        <artifactId>spring-boot-restclient</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <!-- ===== 模块标识信息：定义当前模块的坐标和说明 ===== -->
+    <artifactId>spring-boot-restclient-core</artifactId>
+
+    <name>${project.artifactId}</name>
+    <description>RestClient 核心模块 - 提供 RestClient 统一配置与请求日志拦截器，可原封不动复制到任意 Spring Boot 项目中使用</description>
+
+    <!-- ===== 模块依赖：声明本模块专属的依赖 ===== -->
+    <dependencies>
+        <!-- Spring Boot RestClient：提供 RestClient.Builder 自动配置、ClientHttpRequestFactoryBuilder 与 HttpClientSettings -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-restclient</artifactId>
+        </dependency>
+
+        <!-- Logbook：HTTP 请求与响应日志记录，提供结构化日志、敏感信息过滤与多输出源支持 -->
+        <dependency>
+            <groupId>org.zalando</groupId>
+            <artifactId>logbook-spring</artifactId>
+            <version>4.0.4</version>
+        </dependency>
+    </dependencies>
+
+</project>

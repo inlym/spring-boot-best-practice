@@ -1,0 +1,11 @@
+# RestClient 演示模块的 HTTP 调试脚本
+#
+# 配合 RestClientDemoController 的端点，演示通过 RestClient 对外发起 HTTP 请求获取公网 IP
+# 使用方式：在 IntelliJ IDEA 中打开本文件，点击每个请求左侧的绿色箭头执行
+
+@host = http://localhost:8080
+
+### 查询公网 IP 地址
+# 通过 RestClient 调用 ipify 公开 API 获取当前机器的公网 IP 地址
+# Logbook 会在控制台输出请求与响应的详细日志（含关联 ID、耗时、状态码等）
+GET {{host}}/http/public-ip
