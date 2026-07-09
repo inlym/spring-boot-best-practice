@@ -1,0 +1,14 @@
+# spring-boot-clientip-demo 演示模块配置
+# 演示客户端 IP 地址提取与注入的最佳实践
+
+# Spring 框架配置
+spring:
+    # 应用名称，用于服务注册与日志追踪
+    application:
+        name: "spring-boot-clientip-demo"
+
+# 日志配置
+logging:
+    level:
+        # ClientIpFilter 的 IP 提取日志输出 TRACE 级别
+        com.example.clientip.core.support.ip.ClientIpFilter: TRACE

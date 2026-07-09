@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ===== 父项目配置：继承统一依赖与插件管理 ===== -->
+    <parent>
+        <groupId>com.example</groupId>
+        <artifactId>spring-boot-clientip</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <!-- ===== 模块标识信息：定义当前模块的坐标和说明 ===== -->
+    <artifactId>spring-boot-clientip-demo</artifactId>
+
+    <name>${project.artifactId}</name>
+    <description>ClientIp 演示模块 - 演示客户端 IP 地址获取与注入的最佳实践</description>
+
+    <!-- ===== 模块依赖：依赖 core 子模块 ===== -->
+    <dependencies>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>spring-boot-clientip-core</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
+
+    <!-- ===== 构建配置：引用 spring-boot-maven-plugin 使模块可运行 ===== -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
