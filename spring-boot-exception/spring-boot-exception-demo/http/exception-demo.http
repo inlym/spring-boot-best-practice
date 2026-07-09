@@ -1,11 +1,48 @@
-### 触发实体未找到异常（返回 404，错误码 ENTITY_NOT_FOUND）
-GET http://localhost:8080/exceptions/entity-not-found
+# 异常处理演示模块的 HTTP 调试脚本
+#
+# 配合 ExceptionDemoController 端点演示全局异常处理与统一错误响应，以及 ErrorResponseI18nAdvice 根据 Accept-Language 自动替换多语言错误消息
+# 使用方式：在 IntelliJ IDEA 中打开本文件，点击每个请求左侧的绿色箭头执行
+
+@host = http://localhost:8080
+
+# ================================ 基础异常演示 ================================
+
+### 触发实体未找到异常（返回 404，错误码 ENTITY_NOT_FOUND，默认中文消息）
+GET {{host}}/exceptions/entity-not-found
 
 ### 触发意料之外异常（返回 500，错误码 UNPREDICTABLE_ERROR）
-GET http://localhost:8080/exceptions/unpredictable
+GET {{host}}/exceptions/unpredictable
 
 ### 触发业务异常基类（返回 400，错误码 BUSINESS_ERROR）
-GET http://localhost:8080/exceptions/base
+GET {{host}}/exceptions/base
 
 ### 触发未预期运行时异常（返回 500，错误码 INTERNAL_ERROR）
-GET http://localhost:8080/exceptions/generic
+GET {{host}}/exceptions/generic
+
+# ================================ 多语言演示（中文） ================================
+
+### 实体未找到异常（中文，显式发送 zh-CN 请求头）
+GET {{host}}/exceptions/entity-not-found
+Accept-Language: zh-CN,zh;q=0.9,en;q=0.8
+
+### 业务异常（中文，显式发送 zh-CN 请求头）
+GET {{host}}/exceptions/base
+Accept-Language: zh-CN,zh;q=0.9,en;q=0.8
+
+# ================================ 多语言演示（英文） ================================
+
+### 实体未找到异常（英文）
+GET {{host}}/exceptions/entity-not-found
+Accept-Language: en-US,en;q=0.9,zh;q=0.8
+
+### 意料之外异常（英文）
+GET {{host}}/exceptions/unpredictable
+Accept-Language: en-US,en;q=0.9,zh;q=0.8
+
+### 业务异常（英文）
+GET {{host}}/exceptions/base
+Accept-Language: en-US,en;q=0.9,zh;q=0.8
+
+### 未预期运行时异常（英文）
+GET {{host}}/exceptions/generic
+Accept-Language: en-US,en;q=0.9,zh;q=0.8

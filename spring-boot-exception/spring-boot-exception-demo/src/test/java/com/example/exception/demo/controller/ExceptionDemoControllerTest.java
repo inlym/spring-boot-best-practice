@@ -1,6 +1,9 @@
 package com.example.exception.demo.controller;
 
+import com.example.exception.core.advice.ErrorResponseI18nAdvice;
 import com.example.exception.core.config.GlobalExceptionHandler;
+import com.example.exception.demo.config.ExceptionMessageSourceBasenameCustomizer;
+import com.example.i18n.core.config.I18nConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -16,12 +19,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * <h2>说明
  * <p>通过 MockMvc 验证各异常端点返回的 HTTP 状态码与错误响应体，确保全局异常处理器正确拦截各类异常。
+ * <p>同时验证 ErrorResponseI18nAdvice 根据 Accept-Language 请求头自动替换多语言错误消息。
  *
  * @author <a href="https://www.inlym.com">inlym</a>
  * @since 1.0.0
  */
 @WebMvcTest(ExceptionDemoController.class)
-@Import(GlobalExceptionHandler.class)
+@Import({
+    GlobalExceptionHandler.class,
+    ErrorResponseI18nAdvice.class,
+    I18nConfig.class,
+    ExceptionMessageSourceBasenameCustomizer.class
+})
 class ExceptionDemoControllerTest {
 
     /** MockMvc 测试客户端，由 Spring 注入 */
@@ -87,6 +96,53 @@ class ExceptionDemoControllerTest {
             .andExpect(status().isInternalServerError())
             .andExpect(jsonPath("$.code").value("INTERNAL_ERROR"))
             .andExpect(jsonPath("$.message").value("服务器繁忙，请稍后重试"))
+            .andExpect(jsonPath("$.details").doesNotExist());
+    }
+
+    // ================================ i18n 多语言测试 ================================
+
+    /**
+     * 英文请求头时 EntityNotFoundException 返回英文消息
+     *
+     * <h3>验证逻辑
+     * <p>发送 Accept-Language: en，验证 ErrorResponseI18nAdvice 根据错误码从英文资源文件查找并替换消息
+     */
+    @Test
+    void entityNotFoundReturnsEnglishMessageForEnglishHeader() throws Exception {
+        mockMvc.perform(get("/exceptions/entity-not-found").header("Accept-Language", "en"))
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("$.code").value("ENTITY_NOT_FOUND"))
+            .andExpect(jsonPath("$.message").value("The requested resource does not exist or has been removed"))
+            .andExpect(jsonPath("$.details").doesNotExist());
+    }
+
+    /**
+     * 缺省请求头时使用默认语言返回中文消息
+     *
+     * <h3>验证逻辑
+     * <p>不发送 Accept-Language，LocaleResolver 回退默认 zh-CN，中文消息与 GlobalExceptionHandler 硬编码一致
+     */
+    @Test
+    void entityNotFoundReturnsChineseMessageByDefault() throws Exception {
+        mockMvc.perform(get("/exceptions/entity-not-found"))
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("$.code").value("ENTITY_NOT_FOUND"))
+            .andExpect(jsonPath("$.message").value("请求的资源不存在或已被删除"))
+            .andExpect(jsonPath("$.details").doesNotExist());
+    }
+
+    /**
+     * 英文请求头时 BaseException 返回英文消息
+     *
+     * <h3>验证逻辑
+     * <p>验证不同错误码（BUSINESS_ERROR）在英文环境下同样正确映射
+     */
+    @Test
+    void baseExceptionReturnsEnglishMessageForEnglishHeader() throws Exception {
+        mockMvc.perform(get("/exceptions/base").header("Accept-Language", "en"))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.code").value("BUSINESS_ERROR"))
+            .andExpect(jsonPath("$.message").value("Operation failed, please try again later"))
             .andExpect(jsonPath("$.details").doesNotExist());
     }
 }

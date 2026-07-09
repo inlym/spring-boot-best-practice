@@ -24,6 +24,13 @@
             <artifactId>spring-boot-exception-core</artifactId>
             <version>${revision}</version>
         </dependency>
+
+        <!-- 国际化核心配置模块，提供 MessageSource Bean 以激活 ErrorResponseI18nAdvice 多语言文案替换 -->
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>spring-boot-i18n-core</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 
     <!-- ===== 构建配置：引用 spring-boot-maven-plugin 使模块可运行 ===== -->
