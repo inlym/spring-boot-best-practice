@@ -1,0 +1,8 @@
+# spring-boot-exception-demo 演示模块配置
+# 演示全局异常处理与统一错误响应的最佳实践
+
+# Spring 框架配置
+spring:
+    # 应用名称，用于服务注册与日志追踪
+    application:
+        name: "spring-boot-exception-demo"

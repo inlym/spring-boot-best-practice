@@ -37,6 +37,7 @@
         <module>spring-boot-restclient</module>
         <module>spring-boot-clientip</module>
         <module>spring-boot-security</module>
+        <module>spring-boot-exception</module>
     </modules>
 
     <!-- ===== 全局属性：集中管理版本号、编码及编译配置 ===== -->

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ===== 父项目配置：继承根项目的统一依赖与插件管理 ===== -->
+    <parent>
+        <groupId>com.example</groupId>
+        <artifactId>spring-boot-best-practice</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <!-- ===== 模块标识信息：异常处理模块的聚合父 POM ===== -->
+    <artifactId>spring-boot-exception</artifactId>
+
+    <name>${project.artifactId}</name>
+    <description>异常处理模块 - 聚合 core 配置与 demo 演示两个子模块</description>
+
+    <!-- ===== 打包方式：父模块使用 pom 打包，不产出 Jar ===== -->
+    <packaging>pom</packaging>
+
+    <!-- ===== 子模块声明 ===== -->
+    <modules>
+        <module>spring-boot-exception-core</module>
+        <module>spring-boot-exception-demo</module>
+    </modules>
+
+</project>

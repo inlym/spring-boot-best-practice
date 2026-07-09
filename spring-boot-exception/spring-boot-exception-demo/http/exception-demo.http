@@ -1,0 +1,11 @@
+### 触发实体未找到异常（返回 404，错误码 ENTITY_NOT_FOUND）
+GET http://localhost:8080/exceptions/entity-not-found
+
+### 触发意料之外异常（返回 500，错误码 UNPREDICTABLE_ERROR）
+GET http://localhost:8080/exceptions/unpredictable
+
+### 触发业务异常基类（返回 400，错误码 BUSINESS_ERROR）
+GET http://localhost:8080/exceptions/base
+
+### 触发未预期运行时异常（返回 500，错误码 INTERNAL_ERROR）
+GET http://localhost:8080/exceptions/generic
