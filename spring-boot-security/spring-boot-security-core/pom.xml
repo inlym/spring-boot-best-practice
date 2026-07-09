@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ===== 父项目配置：继承统一依赖与插件管理 ===== -->
+    <parent>
+        <groupId>com.example</groupId>
+        <artifactId>spring-boot-security</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <!-- ===== 模块标识信息：定义当前模块的坐标和说明 ===== -->
+    <artifactId>spring-boot-security-core</artifactId>
+
+    <name>${project.artifactId}</name>
+    <description>Spring Security 核心模块 - 提供安全配置、注解与参数解析器，可原封不动复制到任意 Spring Boot 项目中使用</description>
+
+    <!-- ===== 模块依赖：核心模块仅依赖 spring-boot-starter-security ===== -->
+    <dependencies>
+        <!-- Spring Security：提供认证、授权、方法级安全等安全基础设施 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -1,0 +1,8 @@
+# spring-boot-security-demo 演示模块配置
+# 演示 Spring Security 用户 ID 注入与安全配置的最佳实践
+
+# Spring 框架配置
+spring:
+    # 应用名称，用于服务注册与日志追踪
+    application:
+        name: "spring-boot-security-demo"
