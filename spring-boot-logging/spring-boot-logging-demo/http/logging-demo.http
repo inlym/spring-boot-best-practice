@@ -1,0 +1,14 @@
+### 演示 TRACE 级别日志
+GET http://localhost:8080/logs/trace
+
+### 演示 DEBUG 级别日志
+GET http://localhost:8080/logs/debug
+
+### 演示 INFO 级别日志
+GET http://localhost:8080/logs/info
+
+### 演示 WARN 级别日志
+GET http://localhost:8080/logs/warn
+
+### 演示 ERROR 级别日志
+GET http://localhost:8080/logs/error

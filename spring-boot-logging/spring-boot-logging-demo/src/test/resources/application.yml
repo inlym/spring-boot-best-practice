@@ -1,0 +1,4 @@
+# 测试环境日志路径配置，将文件日志输出到 target 目录避免权限问题
+logging:
+    file:
+        path: "target/logs"

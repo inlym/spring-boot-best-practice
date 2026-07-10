@@ -1,0 +1,14 @@
+# spring-boot-logging-demo 演示模块配置
+# 演示在 Spring Boot 项目中使用日志的最佳实践
+
+# Spring 框架配置
+spring:
+    # 应用名称，用于服务注册与日志追踪
+    application:
+        name: "spring-boot-logging-demo"
+
+# 日志配置
+logging:
+    level:
+        # 演示模块所有日志输出 TRACE 级别，使各级别日志可见
+        com.example.logging: TRACE
