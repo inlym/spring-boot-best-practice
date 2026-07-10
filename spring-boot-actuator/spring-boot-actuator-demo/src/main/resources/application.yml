@@ -1,0 +1,49 @@
+# spring-boot-actuator-demo 演示模块配置
+# 包含 Actuator 端点暴露、健康检查、应用信息与自定义监控属性
+
+# Spring 框架配置
+spring:
+    # 应用名称，用于服务注册和监控标识
+    application:
+        name: "spring-boot-actuator-demo"
+
+# Spring Boot Actuator 监控配置
+management:
+    # 端点 Web 暴露配置
+    endpoints:
+        web:
+            exposure:
+                # 暴露的端点列表，仅暴露无敏感信息的端点
+                include: "health,info,metrics"
+
+    # 单端点配置
+    endpoint:
+        health:
+            # 展示组件细节的时机（可选值：never、always、when-authorized）
+            show-details: always
+
+    # 健康检查组件配置
+    health:
+        # SSL 健康检查
+        ssl:
+            # 禁用 SSL 健康检查，演示环境未启用 HTTPS
+            enabled: false
+
+    # 指标通用标签，所有 Micrometer 指标都会自动携带，便于按维度聚合
+    metrics:
+        tags:
+            # 应用名标识，多服务场景下区分指标来源
+            application: ${spring.application.name}
+
+    # Info 端点贡献者配置
+    info:
+        # 暴露环境变量中以 info.* 开头的属性
+        env:
+            enabled: true
+        # 暴露 JDK 运行时信息
+        java:
+            enabled: true
+        # 暴露操作系统信息
+        os:
+            enabled: true
+

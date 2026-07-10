@@ -1,0 +1,44 @@
+### ================================ 自定义指标演示 ================================
+
+### 演示 Counter 指标（每次请求 +1）
+GET http://localhost:8080/actuator-demo/counter
+
+### 演示 Timer 指标（模拟随机耗时 50~500ms）
+GET http://localhost:8080/actuator-demo/timer
+
+### 演示 Gauge 指标 — 添加队列元素
+GET http://localhost:8080/actuator-demo/gauge/add
+
+### 演示 Gauge 指标 — 移除队列元素
+GET http://localhost:8080/actuator-demo/gauge/remove
+
+### 演示 DistributionSummary 指标（记录请求负载大小分布）
+POST http://localhost:8080/actuator-demo/distribution-summary
+Content-Type: application/json
+
+{
+  "size": 1024
+}
+
+### ================================ Spring Actuator 原生端点 ================================
+
+### 健康检查（含自定义公网连通性检测）
+GET http://localhost:8080/actuator/health
+
+### 应用信息（含时区信息）
+GET http://localhost:8080/actuator/info
+
+### 查看所有可用指标名称
+GET http://localhost:8080/actuator/metrics
+
+### 查看 demo.counter 指标详情
+GET http://localhost:8080/actuator/metrics/demo.counter
+
+### 查看 demo.timer 指标详情
+GET http://localhost:8080/actuator/metrics/demo.timer
+
+### 查看 demo.queue.size 指标详情
+GET http://localhost:8080/actuator/metrics/demo.queue.size
+
+### 查看 demo.request.size 指标详情
+GET http://localhost:8080/actuator/metrics/demo.request.size

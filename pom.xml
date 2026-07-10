@@ -39,6 +39,7 @@
         <module>spring-boot-security</module>
         <module>spring-boot-exception</module>
         <module>spring-boot-logging</module>
+        <module>spring-boot-actuator</module>
     </modules>
 
     <!-- ===== 全局属性：集中管理版本号、编码及编译配置 ===== -->
