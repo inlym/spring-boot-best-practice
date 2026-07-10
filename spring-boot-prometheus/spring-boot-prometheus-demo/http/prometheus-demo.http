@@ -1,0 +1,13 @@
+### Actuator 默认端点
+
+### 健康检查
+GET http://localhost:8080/actuator/health
+
+### 应用信息
+GET http://localhost:8080/actuator/info
+
+### 全部指标列表
+GET http://localhost:8080/actuator/metrics
+
+### Prometheus 指标导出端点（供 Prometheus Server 抓取）
+GET http://localhost:8080/actuator/prometheus

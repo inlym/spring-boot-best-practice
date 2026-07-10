@@ -1,0 +1,42 @@
+# ================================ Prometheus Systemd 服务定义 ================================
+
+[Unit]
+# 服务名称与描述
+Description=Prometheus Monitoring Server
+Documentation=https://prometheus.io/docs/
+# 依赖网络就绪与时间同步
+After=network-online.target time-sync.target
+
+[Service]
+# 以专用用户运行，提升安全性
+User=prometheus
+Group=prometheus
+
+# 启动类型：simple（前台运行）
+Type=simple
+
+# 可执行文件与配置参数
+ExecStart=/opt/prometheus/prometheus \
+    --config.file=/opt/prometheus/config/prometheus.yml \
+    --storage.tsdb.path=/opt/prometheus/data \
+    --storage.tsdb.retention.time=30d \
+    --web.console.templates=/opt/prometheus/consoles \
+    --web.console.libraries=/opt/prometheus/console_libraries \
+    --web.listen-address=0.0.0.0:9090
+
+# 重启策略：异常退出时自动重启
+Restart=always
+RestartSec=5s
+
+# 资源限制
+LimitNOFILE=65536
+LimitNPROC=32768
+
+# 停止信号与超时
+KillMode=control-group
+KillSignal=SIGTERM
+TimeoutStopSec=20s
+
+[Install]
+# 系统多用户模式启动
+WantedBy=multi-user.target

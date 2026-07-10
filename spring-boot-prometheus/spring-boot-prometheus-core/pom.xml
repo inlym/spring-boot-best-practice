@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ===== 父项目配置：继承统一依赖与插件管理 ===== -->
+    <parent>
+        <groupId>com.example</groupId>
+        <artifactId>spring-boot-prometheus</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <!-- ===== 模块标识信息：定义当前模块的坐标和说明 ===== -->
+    <artifactId>spring-boot-prometheus-core</artifactId>
+
+    <name>${project.artifactId}</name>
+    <description>Prometheus 核心模块 - 提供 Prometheus 指标注册与通用标签配置，可原封不动复制到任意 Spring Boot 项目中使用</description>
+
+    <!-- ===== 模块依赖：micrometer-registry-prometheus 提供 /actuator/prometheus 端点，actuator-core 复用 HealthIndicator 等公共配置 ===== -->
+    <dependencies>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>spring-boot-actuator-core</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
+
+</project>
