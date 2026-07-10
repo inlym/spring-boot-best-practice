@@ -4,12 +4,12 @@
 
 ## 文件说明
 
-| 文件               | 说明                                                           |
-|--------------------|----------------------------------------------------------------|
-| `prometheus.yml`   | Prometheus Server 配置文件，定义抓取目标与远程写入配置          |
-| `prometheus.service` | systemd 服务注册文件，用于托管 Prometheus 进程生命周期          |
-| `deploy.sh`        | 自动化部署脚本，一键完成下载、安装、注册服务与启动              |
-| `README.md`        | 本说明文件                                                     |
+| 文件                   | 说明                                    |
+|----------------------|---------------------------------------|
+| `prometheus.yml`     | Prometheus Server 配置文件，定义抓取目标与远程写入配置  |
+| `prometheus.service` | systemd 服务注册文件，用于托管 Prometheus 进程生命周期 |
+| `deploy.sh`          | 自动化部署脚本，一键完成下载、安装、注册服务与启动             |
+| `README.md`          | 本说明文件                                 |
 
 ## prometheus.yml 配置要点
 
