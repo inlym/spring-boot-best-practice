@@ -58,8 +58,6 @@ remote_write:
           max_samples_per_send: 2500
           # 批次超时时间
           batch_send_deadline: 30s
-          # 重试次数上限
-          max_retries: 3
           # 重试最小间隔
           min_backoff: 50ms
           # 重试最大间隔

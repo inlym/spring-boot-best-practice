@@ -10,7 +10,7 @@ set -euo pipefail
 # ================================ 可配置参数 ================================
 
 # Prometheus 版本号（从 GitHub Releases 获取）
-readonly PROMETHEUS_VERSION="3.13.0"
+readonly PROMETHEUS_VERSION="3.13.1"
 
 # 安装根目录
 readonly INSTALL_DIR="/opt/prometheus"
@@ -75,9 +75,10 @@ else
     echo "prometheus 用户已存在，跳过"
 fi
 
-# 创建必要目录
+# 创建必要目录并确保 prometheus 用户有写入权限
 mkdir -p "${CONFIG_DIR}" "${DATA_DIR}"
-echo "已创建目录：${CONFIG_DIR} ${DATA_DIR}"
+chown prometheus:prometheus "${CONFIG_DIR}" "${DATA_DIR}"
+echo "已创建目录并设置权限：${CONFIG_DIR} ${DATA_DIR}"
 
 # ================================ 下载 Prometheus ================================
 
@@ -129,6 +130,12 @@ echo "已设置 ${INSTALL_DIR} 目录属主为 prometheus"
 # ================================ 启动服务 ================================
 
 echo "====> [6/7] 重载 systemd 并启动服务"
+
+# 启动前验证数据目录可写入
+if ! sudo -u prometheus test -w "${DATA_DIR}"; then
+    echo "错误：prometheus 用户对 ${DATA_DIR} 无写入权限，请检查目录权限"
+    exit 1
+fi
 
 # 重新加载 systemd 配置
 systemctl daemon-reload
