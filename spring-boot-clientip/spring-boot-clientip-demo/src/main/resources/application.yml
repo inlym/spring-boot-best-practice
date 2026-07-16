@@ -1,6 +1,11 @@
 # spring-boot-clientip-demo 演示模块配置
 # 演示客户端 IP 地址提取与注入的最佳实践
 
+# 服务器配置
+server:
+    # 监听端口
+    port: 8084
+
 # Spring 框架配置
 spring:
     # 应用名称，用于服务注册与日志追踪

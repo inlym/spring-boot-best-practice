@@ -1,6 +1,11 @@
 # spring-boot-redis-demo 演示模块配置
 # 应用启动时自动拉起内嵌 Redis，无需手动安装 Redis 服务
 
+# 服务器配置
+server:
+    # 监听端口
+    port: 8091
+
 # Spring 框架配置
 spring:
     # 应用名称，用于服务注册与日志追踪

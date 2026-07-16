@@ -1,5 +1,10 @@
-# MyBatis-Flex 演示模块配置
+# spring-boot-mybatisflex-demo 演示模块配置
 # 使用 H2 内存数据库，零环境依赖，启动即用
+
+# 服务器配置
+server:
+    # 监听端口
+    port: 8089
 
 # Spring 框架配置
 spring:

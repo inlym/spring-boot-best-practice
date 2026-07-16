@@ -1,6 +1,11 @@
 # spring-boot-actuator-demo 演示模块配置
 # 包含 Actuator 端点暴露、健康检查、应用信息与自定义监控属性
 
+# 服务器配置
+server:
+    # 监听端口
+    port: 8081
+
 # Spring 框架配置
 spring:
     # 应用名称，用于服务注册和监控标识

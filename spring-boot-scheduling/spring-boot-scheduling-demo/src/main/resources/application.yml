@@ -1,5 +1,10 @@
 # spring-boot-scheduling-demo 演示模块最小运行配置
 
+# 服务器配置
+server:
+    # 监听端口
+    port: 8093
+
 # Spring 框架配置
 spring:
     # 应用名称
